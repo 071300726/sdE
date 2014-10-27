@@ -5,9 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routeConfig = require('./routes/routeConfig');
+var routeConfig = require('./src/routes/routeConfig');
 
-var authentication = require('./routes/middleware/authentication');
 
 var app = express();
 
@@ -23,9 +22,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/user', authentication);
-app.use('/', routeConfig);
 
+// register route
+routeConfig(app);
 
 
 
@@ -61,5 +60,3 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(3000);
-
-module.exports = app;
