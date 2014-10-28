@@ -19,6 +19,7 @@ router.get('/', function(req, res) {
 	sql.open(conn_str, function (err, conn) {
         if (err) {
             console.log('发生错误');
+			console.log(err);
         }
 		
         sql.queryRaw(conn_str, "select top 1 * from RIO.DBO.UserInfo", function (err, results) {
