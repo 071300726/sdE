@@ -1,11 +1,18 @@
 var router = require('express').Router()
-var cmd = require('../config').dbCommand.ConnectionString;
-var sqlHelper = require('../common/sqlHelper')();
+var config = require('../config')();
+var cmd = config.dbCommand.ConnectionString;
 
 //http://HOST/efconfig/ConnectionString/
 
+//Index Page
+router.get('/index.html', function(req, res) {
+	res.render('efconfig/connectionString.ejs');
+});
+
+
 //select
 router.get('/', function(req, res) {
+	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
 	var params = [req.query.namespace||'%', 
 					req.query.environment||'%',
 					req.query.value||'%'];
@@ -18,6 +25,7 @@ router.get('/', function(req, res) {
 
 //delete
 router.delete('/', function(req, res) {  
+	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
 	var params = [req.body.namespace||'', 
 				req.body.environment||''];
 
@@ -28,6 +36,7 @@ router.delete('/', function(req, res) {
 
 //create
 router.post('/', function(req, res) { 
+	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
 	var params = [req.body.namespace||'', 
 				req.body.environment||'',
 				req.body.value||''];
@@ -40,6 +49,7 @@ router.post('/', function(req, res) {
 
 //update
 router.put('/', function(req, res) { 
+	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
 	var params = [req.body.value||'',
 				req.body.namespace||'', 
 				req.body.environment||''];
@@ -49,5 +59,14 @@ router.put('/', function(req, res) {
 	});
 	
 });
+
+
+var getConnectionString = function(env){
+	switch(env){
+		case 'dev': return config.dbConnection['dev'];
+		case 'qa': return config.dbConnection['qa'];
+		default: return config.dbConnection['default'];
+	}
+}
 
 module.exports = router;

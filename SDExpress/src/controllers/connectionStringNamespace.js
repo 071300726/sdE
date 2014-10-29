@@ -1,25 +1,53 @@
-var express = require('express');
-var router = express.Router();
+var router = require('express').Router()
+var config = require('../config')();
+var cmd = config.dbCommand.ConnectionStringNamespace;
 
-/*
-GET	/efconfig/ConnectionStringNamespace/?namespace=XX
-POST	/efconfig/ConnectionStringNamespace/
-DELETE	/efconfig/ConnectionStringNamespace/?namespace=XX
-*/
+//http://HOST/efconfig/ConnectionStringNamespace/
+
+//select
 router.get('/', function(req, res) {
-	res.send("123");
+	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
+	var params = [req.query.namespace||'%'];
+					
+	sqlHelper.query(cmd["get"], params ,function(errMsg,resultCollection){
+		res.json({data:resultCollection,message:errMsg});
+	});
+	
 });
 
+//delete
 router.delete('/', function(req, res) {  
-	res.send("123delete");
+	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
+	var params = [req.body.namespace||''];
+
+	sqlHelper.queryRaw(cmd["delete"], params ,function(errMsg,resultCollection){
+		res.json({data:resultCollection,message:errMsg});
+	});
 });
 
+//create
 router.post('/', function(req, res) { 
-	res.send("123post");
+	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
+	var params = [req.body.namespace||''];
+
+	sqlHelper.queryRaw(cmd["create"], params ,function(errMsg,resultCollection){
+		res.json({data:resultCollection,message:errMsg});
+	});
+	
 });
 
+//update
 router.put('/', function(req, res) { 
-	res.send("123put"); 
+	res.json({data:null,message:"don't support update dbo.ConnectionStringNamespace"});	
 });
+
+
+var getConnectionString = function(env){
+	switch(env){
+		case 'dev': return config.dbConnection['dev'];
+		case 'qa': return config.dbConnection['qa'];
+		default: return config.dbConnection['default'];
+	}
+}
 
 module.exports = router;

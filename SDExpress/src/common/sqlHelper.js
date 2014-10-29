@@ -1,5 +1,5 @@
 var mssql = require('msnodesql');
-var config = require('../config');
+var config = require('../config')();
 
 var helper = function(conn_str){
 	conn_str = conn_str || config.dbConnection['default'];
@@ -45,7 +45,7 @@ var helper = function(conn_str){
 			});
 		});
 	};
-	
+		
 	return {
 		query:query,
 		queryRaw:queryRaw
