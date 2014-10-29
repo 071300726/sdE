@@ -1,47 +1,53 @@
-var express = require('express');
-var router = express.Router();
+var router = require('express').Router()
+var cmd = require('../config').dbCommand.ConnectionString;
+var sqlHelper = require('../common/sqlHelper')();
 
-var sql = require('msnodesql');
+//http://HOST/efconfig/ConnectionString/
 
-/*
-GET	/efconfig/ConnectionString/?namespace=XX&environment=XX
-POST	/efconfig/ConnectionString/
-DELETE	/efconfig/ConnectionString/?namespace=XX&environment=XX
-*/
-
+//select
 router.get('/', function(req, res) {
+	var params = [req.query.namespace||'%', 
+					req.query.environment||'%',
+					req.query.value||'%'];
+					
+	sqlHelper.query(cmd["get"], params ,function(errMsg,resultCollection){
+		res.json({data:resultCollection,message:errMsg});
+	});
 	
-	
-			debugger;
-			
-	var conn_str="Driver={SQL Server Native Client 11.0};Server=cns-etdbdevvs1;UID=RioUser;PWD=riouserdev;Database={Rio}";
-	 
-	sql.open(conn_str, function (err, conn) {
-        if (err) {
-            console.log('发生错误');
-			console.log(err);
-        }
-		
-        sql.queryRaw(conn_str, "select top 1 * from RIO.DBO.UserInfo", function (err, results) {
-			var sb=[];
-			for(var i = 0;i<results.rows.length;i++){
-				sb.push(i+":"+results.rows[i])
-			}
-			res.send(sb.join(''));
-        })
-    });
 });
 
+//delete
 router.delete('/', function(req, res) {  
-	res.send("1234delete");
+	var params = [req.body.namespace||'', 
+				req.body.environment||''];
+
+	sqlHelper.queryRaw(cmd["delete"], params ,function(errMsg,resultCollection){
+		res.json({data:resultCollection,message:errMsg});
+	});
 });
 
+//create
 router.post('/', function(req, res) { 
-	res.send("1234post");
+	var params = [req.body.namespace||'', 
+				req.body.environment||'',
+				req.body.value||''];
+
+	sqlHelper.queryRaw(cmd["create"], params ,function(errMsg,resultCollection){
+		res.json({data:resultCollection,message:errMsg});
+	});
+	
 });
 
+//update
 router.put('/', function(req, res) { 
-	res.send("1234put"); 
+	var params = [req.body.value||'',
+				req.body.namespace||'', 
+				req.body.environment||''];
+
+	sqlHelper.queryRaw(cmd["update"], params ,function(errMsg,resultCollection){
+		res.json({data:resultCollection,message:errMsg});
+	});
+	
 });
 
 module.exports = router;
