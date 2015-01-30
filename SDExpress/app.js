@@ -28,6 +28,16 @@ routeConfig(app);
 
 
 
+app.use(function(err, req, res, next){
+  if(err){
+	console.error(err.stack);
+	res.send(500, 'Something broke!');
+  }
+  else{
+	next();
+  }
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
