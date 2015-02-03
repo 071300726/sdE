@@ -6,7 +6,7 @@ var cmd = config.dbCommand.ConnectionStringNamespace;
 
 //select
 router.get('/', function(req, res) {
-	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
+	var sqlHelper = require('../../common/sqlHelper')(getConnectionString(req.params.env));
 	var params = [req.query.namespace||'%'];
 					
 	sqlHelper.query(cmd["get"], params ,function(errMsg,resultCollection){
@@ -17,7 +17,7 @@ router.get('/', function(req, res) {
 
 //delete
 router.delete('/', function(req, res) {  
-	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
+	var sqlHelper = require('../../common/sqlHelper')(getConnectionString(req.params.env));
 	var params = [req.body.namespace||''];
 
 	sqlHelper.queryRaw(cmd["delete"], params ,function(errMsg,resultCollection){
@@ -27,7 +27,7 @@ router.delete('/', function(req, res) {
 
 //create
 router.post('/', function(req, res) { 
-	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
+	var sqlHelper = require('../../common/sqlHelper')(getConnectionString(req.params.env));
 	var params = [req.body.namespace||''];
 
 	sqlHelper.queryRaw(cmd["create"], params ,function(errMsg,resultCollection){

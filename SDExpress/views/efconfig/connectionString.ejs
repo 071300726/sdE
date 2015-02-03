@@ -12,8 +12,44 @@
 
     <div class="view-container">
         <div id="content" ng-controller="defaultCtrl">
-            <!--BODY-->
-			<input name="username" type="text" ng-model="username" />
+            <!--BODY BEGIN-->
+			<div class="panel panel-default">
+				<div class="panel-heading"></div>
+				<div class="panel-body">
+					<input type="text" ng-model="filter.namespace" ng-change="onNamespaceChanged()">
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">Namespace</div>
+				<div class="panel-body"></div>
+				<table class="table">
+					<tr>
+						<td>Namespace</td>
+						<td>ConfigVersion</td>
+						<td>InsertBy_id</td>
+						<td>InsertDate</td>
+						<td>SaveBy_id</td>
+						<td>SaveDate</td>
+						<td>UpdateDate</td>
+					</tr>
+					<tr ng-repeat="item in namespaceList">
+						<td editable><span ng-bind="item.Namespace"></span><input type="text" ng-model="item.Namespace"/></td>
+						<td ng-model="item.ConfigVersion" ng-bind="item.ConfigVersion"></td>
+						<td ng-model="item.InsertBy_id" ng-bind="item.InsertBy_id"></td>
+						<td ng-model="item.InsertDate" ng-bind="item.InsertDate"></td>
+						<td ng-model="item.SaveBy_id" ng-bind="item.SaveBy_id"></td>
+						<td ng-model="item.SaveDate" ng-bind="item.SaveDate"></td>
+						<td ng-model="item.UpdateDate" ng-bind="item.UpdateDate"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">ConnectionString</div>
+				<div class="panel-body">
+				
+				</div>
+			</div>
+			<!--BODY END-->
         </div>
     </div>
 

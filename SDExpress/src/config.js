@@ -10,7 +10,7 @@ module.exports = function(){
 		
 		dbCommand :{
 			ConnectionString:{		
-				get: "SELECT TOP 500 * FROM ConfigStore.dbo.ConnectionString WITH(NOLOCK) WHERE [Namespace] LIKE ? AND ServerEnvironmentName LIKE ? AND [Value] LIKE ? AND ConfigVersion=1",
+				get: "SELECT TOP 10 * FROM ConfigStore.dbo.ConnectionString WITH(NOLOCK) WHERE [Namespace] LIKE ? AND ServerEnvironmentName LIKE ? AND [Value] LIKE ? AND ConfigVersion=1",
 				
 				create:"INSERT INTO[ConfigStore].[dbo].[ConnectionString]([Namespace],[ServerEnvironmentName],[ConfigVersion],[Value],[InsertDate],[InsertBy_id],[SaveDate],[SaveBy_id],[UpdateDate])VALUES(?,?,'1',?,GETDATE(),-1,GETDATE(),-1,GETDATE())",
 				
@@ -20,7 +20,7 @@ module.exports = function(){
 			},
 			
 			ConnectionStringNamespace:{
-				get:"SELECT TOP 500 * FROM ConfigStore.dbo.ConnectionStringNamespace WITH(NOLOCK) WHERE [Namespace] LIKE ?",
+				get:"SELECT TOP 10 * FROM ConfigStore.dbo.ConnectionStringNamespace WITH(NOLOCK) WHERE [Namespace] LIKE ?",
 				
 				create:"INSERT INTO[ConfigStore].[dbo].[ConnectionStringNamespace]([Namespace],[ConfigVersion],[InsertDate],[InsertBy_id],[SaveDate],[SaveBy_id],[UpdateDate])VALUES(?,'1',GETDATE(),-1,GETDATE(),-1,GETDATE())",
 							

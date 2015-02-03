@@ -5,7 +5,7 @@ var cmd = config.dbCommand.ConnectionString;
 
 //select
 router.get('/', function(req, res) {
-	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
+	var sqlHelper = require('../../common/sqlHelper')(getConnectionString(req.params.env));
 	var params = [req.query.namespace||'%', 
 					req.query.environment||'%',
 					req.query.value||'%'];
@@ -18,7 +18,7 @@ router.get('/', function(req, res) {
 
 //delete
 router.delete('/', function(req, res) {  
-	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
+	var sqlHelper = require('../../common/sqlHelper')(getConnectionString(req.params.env));
 	var params = [req.body.namespace||'', 
 				req.body.environment||''];
 
@@ -29,7 +29,7 @@ router.delete('/', function(req, res) {
 
 //create
 router.post('/', function(req, res) { 
-	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
+	var sqlHelper = require('../../common/sqlHelper')(getConnectionString(req.params.env));
 	var params = [req.body.namespace||'', 
 				req.body.environment||'',
 				req.body.value||''];
@@ -42,7 +42,7 @@ router.post('/', function(req, res) {
 
 //update
 router.put('/', function(req, res) { 
-	var sqlHelper = require('../common/sqlHelper')(getConnectionString(req.params.env));
+	var sqlHelper = require('../../common/sqlHelper')(getConnectionString(req.params.env));
 	var params = [req.body.value||'',
 				req.body.namespace||'', 
 				req.body.environment||''];
