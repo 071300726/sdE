@@ -10631,8 +10631,8 @@ button.toast-close-button {
     position: absolute;
     top: 50px;
     bottom: 0;
-    left: -220px;
-    width: 220px;
+    left: -170px;
+    width: 170px;
     padding: 0;
     background-color: #242633;
     -webkit-overflow-scrolling: touch;
@@ -10770,7 +10770,7 @@ button.toast-close-button {
 #nav ul li>a {
     position: relative;
     display: block;
-    padding: 13px 0 13px 25px;
+    padding: 13px 0 13px 13px;
     -webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
@@ -10836,7 +10836,7 @@ button.toast-close-button {
     }
 
     .nav-min #nav>li>a {
-        padding: 15px 15px;
+        padding: 15px 7px;
         text-align: center;
     }
 
@@ -11135,7 +11135,7 @@ button.toast-close-button {
     #content {
         top: 50px;
         width: auto;
-        left: 220px;
+        left: 170px;
     }
 }
 
