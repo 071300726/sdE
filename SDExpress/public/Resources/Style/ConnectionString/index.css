@@ -1,0 +1,10 @@
+div.tablecontainer
+{
+	overflow:auto;
+	max-height:400px;
+}
+
+tr.selected
+{
+	background-color:antiquewhite
+}

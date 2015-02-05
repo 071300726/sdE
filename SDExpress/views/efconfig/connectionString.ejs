@@ -11,42 +11,76 @@
 	</div>
 
     <div class="view-container">
-        <div id="content" ng-controller="defaultCtrl">
+        <div id="content">
             <!--BODY BEGIN-->
-			<div class="panel panel-default">
-				<div class="panel-heading"></div>
-				<div class="panel-body">
+
+			<div class="panel panel-default" ng-controller="connectionStringNamespaceCtrl">
+				<div class="panel-heading">
+					Namespace 
 					<input type="text" ng-model="filter.namespace" ng-change="onNamespaceChanged()">
 				</div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">Namespace</div>
-				<div class="panel-body"></div>
-				<table class="table">
-					<tr>
-						<td>Namespace</td>
-						<td>ConfigVersion</td>
-						<td>InsertBy_id</td>
-						<td>InsertDate</td>
-						<td>SaveBy_id</td>
-						<td>SaveDate</td>
-						<td>UpdateDate</td>
-					</tr>
-					<tr ng-repeat="item in namespaceList">
-						<td editable><span ng-bind="item.Namespace"></span><input type="text" ng-model="item.Namespace"/></td>
-						<td ng-model="item.ConfigVersion" ng-bind="item.ConfigVersion"></td>
-						<td ng-model="item.InsertBy_id" ng-bind="item.InsertBy_id"></td>
-						<td ng-model="item.InsertDate" ng-bind="item.InsertDate"></td>
-						<td ng-model="item.SaveBy_id" ng-bind="item.SaveBy_id"></td>
-						<td ng-model="item.SaveDate" ng-bind="item.SaveDate"></td>
-						<td ng-model="item.UpdateDate" ng-bind="item.UpdateDate"></td>
-					</tr>
-				</table>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">ConnectionString</div>
-				<div class="panel-body">
+				<div class="tablecontainer">
+					<table class="table">
+						<tr>
+							<td>Action</td>
+							<td>Namespace</td>
+							<td>ConfigVersion</td>
+							<td>InsertBy_id</td>
+							<td>InsertDate</td>
+							<td>SaveBy_id</td>
+							<td>SaveDate</td>
+							<td>UpdateDate</td>
+						</tr>
+						<tr ng-repeat="item in namespaceList" ng-model="item" selectable>
+							<td>
+								<span class="glyphicon glyphicon-remove" title="delete"></span>
+								<span class="glyphicon glyphicon-open" title="commit"></span>
+							</td>
+							<td editable><span ng-bind="item.Namespace"></span><input type="text" ng-model="item.Namespace"/></td>
+							<td ng-model="item.ConfigVersion" ng-bind="item.ConfigVersion"></td>
+							<td ng-model="item.InsertBy_id" ng-bind="item.InsertBy_id"></td>
+							<td ng-model="item.InsertDate" ng-bind="item.InsertDate"></td>
+							<td ng-model="item.SaveBy_id" ng-bind="item.SaveBy_id"></td>
+							<td ng-model="item.SaveDate" ng-bind="item.SaveDate"></td>
+							<td ng-model="item.UpdateDate" ng-bind="item.UpdateDate"></td>
+						</tr>
+					</table>
+				</div>
 				
+			</div>
+			<div class="panel panel-default" ng-controller="connectionStringCtrl">
+				<div class="panel-heading">ConnectionString</div>
+				
+				<div class="tablecontainer">
+					<table class="table">
+						<tr>
+							<td>Action</td>
+							<td>Namespace</td>
+							<td>ServerEnvironmentName</td>
+							<td>Value</td>
+							<td>ConfigVersion</td>
+							<td>InsertBy_id</td>
+							<td>InsertDate</td>
+							<td>SaveBy_id</td>
+							<td>SaveDate</td>
+							<td>UpdateDate</td>
+						</tr>
+						<tr ng-repeat="item in connectionStringList">
+							<td>
+								<span class="glyphicon glyphicon-remove" title="delete"></span>
+								<span class="glyphicon glyphicon-open" title="commit"></span>
+							</td>
+							<td editable><span ng-bind="item.Namespace"></span><input type="text" ng-model="item.Namespace"/></td>
+							<td ng-model="item.ServerEnvironmentName" ng-bind="item.ServerEnvironmentName"></td>
+							<td ng-model="item.Value" ng-bind="item.Value"></td>
+							<td ng-model="item.ConfigVersion" ng-bind="item.ConfigVersion"></td>
+							<td ng-model="item.InsertBy_id" ng-bind="item.InsertBy_id"></td>
+							<td ng-model="item.InsertDate" ng-bind="item.InsertDate"></td>
+							<td ng-model="item.SaveBy_id" ng-bind="item.SaveBy_id"></td>
+							<td ng-model="item.SaveDate" ng-bind="item.SaveDate"></td>
+							<td ng-model="item.UpdateDate" ng-bind="item.UpdateDate"></td>
+						</tr>
+					</table>
 				</div>
 			</div>
 			<!--BODY END-->
@@ -55,5 +89,6 @@
 
 	<% include ../partials/footScript %>
 	<script src="/Resources/Script/ConnectionString/index.js" type="text/javascript"></script>
+	<link href="/Resources/Style/ConnectionString/index.css" rel="stylesheet"/>
 </body>
 </html>

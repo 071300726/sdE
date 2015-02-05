@@ -29,9 +29,27 @@ connectionStringCtrls.directive('editable', function () {
         }
     };
 });
+connectionStringCtrls.directive('selectable', ['$rootScope', function ($rootScope) {
+    return {
+		require:'ngModel',
+        link: function (scope, element, attrs, ngModel) {
+			var $this = $(element);
+			
+            $this.click(function(){
+				$this.siblings('.selected').removeClass('selected');
+				$this.addClass('selected');
+				
+				$rootScope.$broadcast("ConnectionStringCtrl.Filter.Namespace.Changed",ngModel.$modelValue);
+			});
+			
+        }
+    };
+}]);
 
 
-connectionStringCtrls.controller('defaultCtrl', ['$scope', '$http',
+		
+//connectionStringNamespace
+connectionStringCtrls.controller('connectionStringNamespaceCtrl', ['$scope', '$http',
 function ($scope, $http) {
 	var onNamespaceChanged = function(){
 		var params={
@@ -47,6 +65,37 @@ function ($scope, $http) {
 		$scope.namespaceList=[];
 		$scope.onNamespaceChanged=onNamespaceChanged;
 		onNamespaceChanged();
+	}
+	
+	init();
+	
+}]);
+
+//connectionString
+connectionStringCtrls.controller('connectionStringCtrl', ['$scope', '$http', '$rootScope',
+function ($scope, $http, $rootScope) {
+	var onSelectedNamespaceChanged = function(event,msg){
+		if($scope.filter.namespace == msg.Namespace) return;
+	
+		$scope.filter.namespace = msg.Namespace;
+
+		if($scope.filter.namespace == ""){
+			$scope.connectionStringList = [];
+			return;
+		}
+		
+		var params={
+			namespace:$scope.filter.namespace
+		};
+		$http.get('/efconfig/service/connectionstring',{params:params}).success(function(response){
+			$scope.connectionStringList = response.data;
+		});
+	};
+
+	var init = function(){
+		$scope.filter={};
+		$scope.connectionStringList = [];
+		$rootScope.$on("ConnectionStringCtrl.Filter.Namespace.Changed",onSelectedNamespaceChanged);
 	}
 	
 	init();
